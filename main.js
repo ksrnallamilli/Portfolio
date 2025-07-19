@@ -1,40 +1,68 @@
 // Theme Management
 class ThemeManager {
   constructor() {
-    this.themeToggle = document.getElementById('theme-toggle');
-    this.body = document.body;
-    this.currentTheme = localStorage.getItem('theme') || 'light';
-    
-    this.init();
+    try {
+      this.themeToggle = document.getElementById('theme-toggle');
+      this.body = document.body;
+      this.currentTheme = localStorage.getItem('theme') || 'light';
+      
+      if (!this.themeToggle) {
+        console.error('Theme toggle button not found!');
+        return;
+      }
+      
+      console.log('ThemeManager initialized successfully');
+      this.init();
+    } catch (error) {
+      console.error('Error initializing ThemeManager:', error);
+    }
   }
   
   init() {
-    this.setTheme(this.currentTheme);
-    this.themeToggle.addEventListener('click', () => this.toggleTheme());
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) {
-        this.setTheme(e.matches ? 'dark' : 'light');
-      }
-    });
+    try {
+      this.setTheme(this.currentTheme);
+      this.themeToggle.addEventListener('click', () => this.toggleTheme());
+      
+      // Listen for system theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          this.setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+      
+      console.log('Theme toggle event listener added');
+    } catch (error) {
+      console.error('Error in ThemeManager init:', error);
+    }
   }
   
   setTheme(theme) {
-    this.currentTheme = theme;
-    this.body.setAttribute('data-theme', theme);
-    
-    // Update icon
-    const icon = this.themeToggle.querySelector('i');
-    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    
-    // Store preference
-    localStorage.setItem('theme', theme);
+    try {
+      this.currentTheme = theme;
+      this.body.setAttribute('data-theme', theme);
+      
+      // Update icon
+      const icon = this.themeToggle.querySelector('i');
+      if (icon) {
+        icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+      }
+      
+      // Store preference
+      localStorage.setItem('theme', theme);
+      console.log('Theme set to:', theme);
+    } catch (error) {
+      console.error('Error setting theme:', error);
+    }
   }
   
   toggleTheme() {
-    const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-    this.setTheme(newTheme);
+    try {
+      const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+      this.setTheme(newTheme);
+      console.log('Theme toggled to:', newTheme);
+    } catch (error) {
+      console.error('Error toggling theme:', error);
+    }
   }
 }
 
@@ -570,3 +598,4 @@ if (typeof module !== 'undefined' && module.exports) {
     FormValidator,
     utils
   };
+}
