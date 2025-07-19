@@ -570,4 +570,3 @@ if (typeof module !== 'undefined' && module.exports) {
     FormValidator,
     utils
   };
-}
